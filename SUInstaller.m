@@ -117,6 +117,13 @@ static NSString*	sUpdateFolder = nil;
     return isPackage ? nil : path;
 }
 
++ (NSString *)pkgPathInUpdateFolder:(NSString *)updateFolder forHost:(SUHost *)host
+{
+    BOOL isPackage = NO;
+    NSString *path = [self installSourcePathInUpdateFolder:updateFolder forHost:host isPackage:&isPackage];
+    return isPackage ? path : nil;
+}
+
 + (void)installFromUpdateFolder:(NSString *)inUpdateFolder overHost:(SUHost *)host installationPath:(NSString *)installationPath delegate:delegate synchronously:(BOOL)synchronously versionComparator:(id <SUVersionComparison>)comparator
 {
     BOOL isPackage = NO;

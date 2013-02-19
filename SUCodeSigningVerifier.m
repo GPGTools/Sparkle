@@ -66,6 +66,52 @@ finally:
     return (result == 0);
 }
 
++ (BOOL)pkgSignatureIsValidAtPath:(NSString *)pkgPath error:(NSError **)error
+{
+	//Check package validity
+	NSTask *task = [[NSTask new] autorelease];
+	NSPipe *pipe = [NSPipe pipe];
+	task.launchPath = @"/usr/sbin/pkgutil";
+	task.arguments = [NSArray arrayWithObjects:@"--check-signature", pkgPath, nil];
+	task.standardOutput = pipe;
+	[task launch];
+	
+	NSData *output = [[pipe fileHandleForReading] readDataToEndOfFile];
+	NSString *text = [[[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding] autorelease];
+	
+	
+	// Search certificate fingerprint.
+	NSRange range = [text rangeOfString:@"\n       SHA1 fingerprint: "];
+	if (range.location == 0 || range.location == NSNotFound) {
+		return NO;
+	}
+	
+	
+	// Get SHA1 fingerprint.
+	range.location += 26;
+	range.length = 59;
+	
+	NSString *sha1;
+	@try {
+		sha1 = [text substringWithRange:range];
+	}
+	@catch (NSException *exception) {
+		return NO;
+	}
+	
+	sha1 = [sha1 stringByReplacingOccurrencesOfString:@" " withString:@""];
+	printf("SHA1 certificate fingerprint: %s\n", [sha1 UTF8String]);
+	
+	
+	// Check certificate.
+	NSSet *validCertificates = [NSSet setWithObjects:@"D9D5FD439C9516EFC73A0E4AD0F2C5DB9EA0E310", nil];
+	if (![validCertificates member:sha1]) {
+		return NO;
+	}
+	
+	return YES;
+}
+
 + (BOOL)hostApplicationIsCodeSigned
 {
     // This API didn't exist prior to 10.6.

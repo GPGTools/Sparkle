@@ -216,6 +216,14 @@
             SULog(@"Code signature check on update failed: %@", error);
         }
     }
+	else if ((newBundlePath = [SUInstaller pkgPathInUpdateFolder:extractedPath forHost:host]) != nil){
+        NSError *error = nil;
+        if ([SUCodeSigningVerifier pkgSignatureIsValidAtPath:newBundlePath error:&error]) {
+            return YES;
+        } else {
+            SULog(@"Package signature check on update failed: %@", error);
+        }
+	}
     
     return [SUDSAVerifier validatePath:downloadedPath withEncodedDSASignature:DSASignature withPublicDSAKey:publicDSAKey];
 }

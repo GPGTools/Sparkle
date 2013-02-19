@@ -13,6 +13,7 @@
 
 @interface SUCodeSigningVerifier : NSObject
 + (BOOL)codeSignatureIsValidAtPath:(NSString *)destinationPath error:(NSError **)error;
++ (BOOL)pkgSignatureIsValidAtPath:(NSString *)destinationPath error:(NSError **)error;
 + (BOOL)hostApplicationIsCodeSigned;
 @end
 
