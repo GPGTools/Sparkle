@@ -9,6 +9,9 @@
 #import <Security/CodeSigning.h>
 #import "SUCodeSigningVerifier.h"
 #import "SULog.h"
+#import <openssl/x509.h>
+#import <xar/xar.h>
+
 
 @implementation SUCodeSigningVerifier
 
@@ -21,8 +24,7 @@ extern OSStatus SecStaticCodeCreateWithPath(CFURLRef path, SecCSFlags flags, Sec
 extern OSStatus SecStaticCodeCheckValidityWithErrors(SecStaticCodeRef staticCode, SecCSFlags flags, SecRequirementRef requirement, CFErrorRef *errors) __attribute__((weak_import));
 
 
-+ (BOOL)codeSignatureIsValidAtPath:(NSString *)destinationPath error:(NSError **)error
-{
++ (BOOL)codeSignatureIsValidAtPath:(NSString *)destinationPath error:(NSError **)error {
     // This API didn't exist prior to 10.6.
     if (SecCodeCopySelf == NULL) return NO;
     
@@ -66,49 +68,60 @@ finally:
     return (result == 0);
 }
 
-+ (BOOL)pkgSignatureIsValidAtPath:(NSString *)pkgPath error:(NSError **)error
-{
-	//Check package validity
-	NSTask *task = [[NSTask new] autorelease];
-	NSPipe *pipe = [NSPipe pipe];
-	task.launchPath = @"/usr/sbin/pkgutil";
-	task.arguments = [NSArray arrayWithObjects:@"--check-signature", pkgPath, nil];
-	task.standardOutput = pipe;
-	[task launch];
++ (BOOL)pkgSignatureIsValidAtPath:(NSString *)pkgPath error:(NSError **)error {
+	xar_t pkg;
+	xar_signature_t signature;
+	const char *signatureType;
+	const uint8_t *data;
+	uint32_t length, plainLength, signLength;
+	X509 *certificate;
+	uint8_t *plainData, *signData;
+	EVP_PKEY *pubkey;
+	uint8_t hash[20];
+	// This is the hash of the GPGTools installer certificate.
+	uint8_t goodHash[] = {0xD9, 0xD5, 0xFD, 0x43, 0x9C, 0x95, 0x16, 0xEF, 0xC7, 0x3A, 0x0E, 0x4A, 0xD0, 0xF2, 0xC5, 0xDB, 0x9E, 0xA0, 0xE3, 0x10};
+
 	
-	NSData *output = [[pipe fileHandleForReading] readDataToEndOfFile];
-	NSString *text = [[[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding] autorelease];
-	
-	
-	// Search certificate fingerprint.
-	NSRange range = [text rangeOfString:@"\n       SHA1 fingerprint: "];
-	if (range.location == 0 || range.location == NSNotFound) {
-		return NO;
+	if ((pkg = xar_open([pkgPath UTF8String], READ)) == nil) {
+		return NO; // Unable to open the pkg.
 	}
 	
+	signature = xar_signature_first(pkg);
 	
-	// Get SHA1 fingerprint.
-	range.location += 26;
-	range.length = 59;
-	
-	NSString *sha1;
-	@try {
-		sha1 = [text substringWithRange:range];
+	signatureType = xar_signature_type(signature);
+	if (!signatureType || strncmp(signatureType, "RSA", 3)) {
+		return NO; // Not a RSA signature.
 	}
-	@catch (NSException *exception) {
-		return NO;
+
+	if (xar_signature_get_x509certificate_count(signature) < 1) {
+		return NO; // No certificate found.
 	}
+
+	if (xar_signature_get_x509certificate_data(signature, 0, &data, &length) == -1) {
+		return NO; // Unable to extract the certificate data.
+	}
+
+	SHA1(data, length, (uint8_t *)&hash);
 	
-	sha1 = [sha1 stringByReplacingOccurrencesOfString:@" " withString:@""];
-	printf("SHA1 certificate fingerprint: %s\n", [sha1 UTF8String]);
-	
-	
-	// Check certificate.
-	NSSet *validCertificates = [NSSet setWithObjects:@"D9D5FD439C9516EFC73A0E4AD0F2C5DB9EA0E310", nil];
-	if (![validCertificates member:sha1]) {
-		return NO;
+	if (memcmp(hash, goodHash, 20) != 0) {
+		return NO; // Not the GPGTools certificate!
 	}
 	
+	certificate = d2i_X509(nil, &data, length);
+	if (xar_signature_copy_signed_data(signature, &plainData, &plainLength, &signData, &signLength, nil) != 0 || plainLength != 20) {
+		return NO; // Unable to copy signed data || not SHA1.
+	}
+	
+	pubkey = X509_get_pubkey(certificate);
+	if (!pubkey || pubkey->type != EVP_PKEY_RSA || !pubkey->pkey.rsa) {
+		return NO; // No pubkey || not RSA || no RSA.
+	}
+
+	// The verfication.
+	if (RSA_verify(NID_sha1, plainData, plainLength, signData, signLength, pubkey->pkey.rsa) != 1) {
+		return NO; // Verification failed!
+	}
+
 	return YES;
 }
 
