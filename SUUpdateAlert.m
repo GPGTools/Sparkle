@@ -116,7 +116,13 @@
 		else
 		{
 			NSURL *releaseNotesURL = updateItem.releaseNotesURL;
-			releaseNotesURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@appVersion=%@", releaseNotesURL.absoluteString, releaseNotesURL.query ? @"&" : @"?", [host version]]];
+			NSString *appVersion = [host.version stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *updateVersion = [updateItem.displayVersionString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *osVersion = [[SUHost systemVersionString] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+			NSString *seperator = releaseNotesURL.query ? @"&" : @"?";
+			
+			releaseNotesURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@appVersion=%@&updateVersion=%@&osVersion=%@",
+													releaseNotesURL.absoluteString, seperator, appVersion, updateVersion, osVersion]];
 			
 			[[releaseNotesView mainFrame] loadRequest:[NSURLRequest requestWithURL:releaseNotesURL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30]];
 		}
