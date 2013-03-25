@@ -249,6 +249,17 @@
 			[[self window] setShowsResizeIndicator:NO];
 			[[self window] setMinSize:frame.size];
 			[[self window] setMaxSize:frame.size];
+		} else {
+			id updaterDelegate = [[delegate valueForKey:@"updater"] delegate];
+			if (updaterDelegate && [updaterDelegate respondsToSelector:@selector(updateAlert:willShowReleaseNotesWithSize:)]) {
+				NSSize size = [releaseNotesView frame].size;
+				[updaterDelegate updateAlert:self willShowReleaseNotesWithSize:&size];
+				
+				size.width -= [releaseNotesView frame].size.width;
+				size.height -= [releaseNotesView frame].size.height;
+				frame.size.width += size.width;
+				frame.size.height += size.height;
+			}
 		}
 	}
 	
