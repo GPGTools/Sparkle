@@ -8,6 +8,7 @@
 
 #import "SUUpdateDriver.h"
 #import "SUHost.h"
+#import "SULog.h"
 
 NSString * const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
@@ -23,6 +24,7 @@ NSString * const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
 - (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h
 {
+	SULog(@"checkForUpdatesAtURL: %@", URL);
 	appcastURL = [URL copy];
 	host = [h retain];
 }

@@ -142,6 +142,7 @@
 
 - (void)didFindValidUpdate
 {
+	SULog(@"didFindValidUpdate");
 	if ([[updater delegate] respondsToSelector:@selector(updater:didFindValidUpdate:)])
 		[[updater delegate] updater:updater didFindValidUpdate:updateItem];
 	[self downloadUpdate];
@@ -149,6 +150,7 @@
 
 - (void)didNotFindUpdate
 {
+	SULog(@"didNotFindUpdate");
 	if ([[updater delegate] respondsToSelector:@selector(updaterDidNotFindUpdate:)])
 		[[updater delegate] updaterDidNotFindUpdate:updater];
 	[self abortUpdateWithError:[NSError errorWithDomain:SUSparkleErrorDomain code:SUNoUpdateError userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:SULocalizedString(@"You already have the newest version of %@.", nil), [host name]] forKey:NSLocalizedDescriptionKey]]];
