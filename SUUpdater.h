@@ -143,6 +143,17 @@
 
 @end
 
+@protocol SUUserDefaults <NSObject>
+- (id)objectForKey:(NSString *)key;
+- (void)setObject:(id)value forKey:(NSString *)key;
+- (BOOL)boolForKey:(NSString *)key;
+- (void)setBool:(BOOL)value forKey:(NSString *)key;
+@end
+
+@interface NSObject (SUUserDefaults)
+@property (readonly) id <SUUserDefaults> userDefaults;
+@end
+
 
 // -----------------------------------------------------------------------------
 //	Constants:

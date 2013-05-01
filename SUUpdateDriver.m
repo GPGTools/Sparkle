@@ -24,7 +24,7 @@ NSString * const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
 - (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h
 {
-	SULog(@"checkForUpdatesAtURL: %@", URL);
+	SULog(@"%@ checkForUpdatesAtURL: %@", self, URL);
 	appcastURL = [URL copy];
 	host = [h retain];
 }

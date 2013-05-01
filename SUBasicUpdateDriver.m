@@ -97,6 +97,7 @@
 
 - (void)appcastDidFinishLoading:(SUAppcast *)ac
 {
+	SULog(@"appcastDidFinishLoading %@", ac);
 	if ([[updater delegate] respondsToSelector:@selector(updater:didFinishLoadingAppcast:)])
 		[[updater delegate] updater:updater didFinishLoadingAppcast:ac];
     
@@ -136,6 +137,7 @@
 
 - (void)appcast:(SUAppcast *)ac failedToLoadWithError:(NSError *)error
 {
+	SULog(@"appcast: %@ failedToLoadWithError: %@", ac, error);
 	if (ac) { CFRelease(ac); } // Remember that we're explicitly managing the memory of the appcast.
 	[self abortUpdateWithError:error];
 }
@@ -400,8 +402,7 @@
 
 - (void)abortUpdateWithError:(NSError *)error
 {
-	if ([error code] != SUNoUpdateError) // Let's not bother logging this.
-		SULog(@"Sparkle Error: %@", [error localizedDescription]);
+	SULog(@"Sparkle Error: %@", [error localizedDescription]);
 	if ([error localizedFailureReason])
 		SULog(@"Sparkle Error (continued): %@", [error localizedFailureReason]);
 	if (download)

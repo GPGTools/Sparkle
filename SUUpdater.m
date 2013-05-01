@@ -81,6 +81,7 @@ static NSString * const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefault
             sharedUpdaters = [[NSMutableDictionary alloc] init];
         [sharedUpdaters setObject:self forKey:[NSValue valueWithNonretainedObject:bundle]];
         host = [[SUHost alloc] initWithBundle:bundle];
+		host.delegate = self;
 		
         // This runs the permission prompt if needed, but never before the app has finished launching because the runloop won't run before that
         [self performSelector:@selector(startUpdateCycle) withObject:nil afterDelay:0];
@@ -96,6 +97,13 @@ static NSString * const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefault
 }
 
 - (NSString *)description { return [NSString stringWithFormat:@"%@ <%@, %@>", [self class], [host bundlePath], [host installationPath]]; }
+
+- (id <SUUserDefaults>)userDefaults {
+	if ([self.delegate respondsToSelector:@selector(userDefaults)]) {
+		return [self.delegate userDefaults];
+	}
+	return nil;
+}
 
 
 -(void)	notifyWillShowModalAlert

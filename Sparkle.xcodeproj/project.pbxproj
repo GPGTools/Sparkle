@@ -1390,6 +1390,7 @@
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 				);
+				GCC_ENABLE_OBJC_GC = supported;
 			};
 			name = Release;
 		};

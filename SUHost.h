@@ -9,6 +9,8 @@
 #import "SUAppcast.h"
 #import "SUAppcastItem.h"
 #import "SUVersionComparisonProtocol.h"
+#import <Foundation/Foundation.h>
+
 
 @interface SUHost : NSObject
 {
@@ -16,7 +18,9 @@
 	NSBundle *bundle;
 	NSString *defaultsDomain;
 	BOOL usesStandardUserDefaults;
+	id delegate;
 }
+@property (assign) id delegate;
 
 + (NSString *)systemVersionString;
 

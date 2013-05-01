@@ -14,6 +14,7 @@
 
 
 @implementation SUHost
+@synthesize delegate;
 
 - (id)initWithBundle:(NSBundle *)aBundle
 {
@@ -182,11 +183,16 @@
 
 - (id)objectForUserDefaultsKey:(NSString *)defaultName
 {
-	// Under Tiger, CFPreferencesCopyAppValue doesn't get values from NSRegistrationDomain, so anything
-	// passed into -[NSUserDefaults registerDefaults:] is ignored.  The following line falls
-	// back to using NSUserDefaults, but only if the host bundle is the main bundle.
-	if (usesStandardUserDefaults)
-		return [[NSUserDefaults standardUserDefaults] objectForKey:defaultName];
+	id defaults = nil;
+	if ([delegate respondsToSelector:@selector(userDefaults)]) {
+		defaults = [delegate userDefaults];
+	}
+	if (!defaults && usesStandardUserDefaults) {
+		defaults = [NSUserDefaults standardUserDefaults];
+	}
+	if (defaults) {
+		return [defaults objectForKey:defaultName];
+	}
 	
 	CFPropertyListRef obj = CFPreferencesCopyAppValue((CFStringRef)defaultName, (CFStringRef)defaultsDomain);
 	return [(id)CFMakeCollectable(obj) autorelease];
@@ -194,9 +200,17 @@
 
 - (void)setObject:(id)value forUserDefaultsKey:(NSString *)defaultName;
 {
-	if (usesStandardUserDefaults)
+	id defaults = nil;
+	if ([delegate respondsToSelector:@selector(userDefaults)]) {
+		defaults = [delegate userDefaults];
+	}
+	if (!defaults && usesStandardUserDefaults) {
+		defaults = [NSUserDefaults standardUserDefaults];
+	}
+
+	if (defaults)
 	{
-		[[NSUserDefaults standardUserDefaults] setObject:value forKey:defaultName];
+		[defaults setObject:value forKey:defaultName];
 	}
 	else
 	{
@@ -207,8 +221,16 @@
 
 - (BOOL)boolForUserDefaultsKey:(NSString *)defaultName
 {
-	if (usesStandardUserDefaults)
-		return [[NSUserDefaults standardUserDefaults] boolForKey:defaultName];
+	id defaults = nil;
+	if ([delegate respondsToSelector:@selector(userDefaults)]) {
+		defaults = [delegate userDefaults];
+	}
+	if (!defaults && usesStandardUserDefaults) {
+		defaults = [NSUserDefaults standardUserDefaults];
+	}
+	if (defaults) {
+		return [defaults boolForKey:defaultName];
+	}
 	
 	BOOL value;
 	CFPropertyListRef plr = CFPreferencesCopyAppValue((CFStringRef)defaultName, (CFStringRef)defaultsDomain);
@@ -224,9 +246,17 @@
 
 - (void)setBool:(BOOL)value forUserDefaultsKey:(NSString *)defaultName
 {
-	if (usesStandardUserDefaults)
+	id defaults = nil;
+	if ([delegate respondsToSelector:@selector(userDefaults)]) {
+		defaults = [delegate userDefaults];
+	}
+	if (!defaults && usesStandardUserDefaults) {
+		defaults = [NSUserDefaults standardUserDefaults];
+	}
+
+	if (defaults)
 	{
-		[[NSUserDefaults standardUserDefaults] setBool:value forKey:defaultName];
+		[defaults setBool:value forKey:defaultName];
 	}
 	else
 	{
