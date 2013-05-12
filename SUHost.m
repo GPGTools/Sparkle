@@ -65,7 +65,7 @@
     }
     else
         appSupportPath = [appSupportPaths objectAtIndex:0];
-    appSupportPath = [appSupportPath stringByAppendingPathComponent:[self name]];
+    appSupportPath = [[appSupportPath stringByAppendingPathComponent:@"GPGTools"] stringByAppendingPathComponent:[self name]];
     return appSupportPath;
 }
 
