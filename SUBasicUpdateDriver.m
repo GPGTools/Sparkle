@@ -359,9 +359,17 @@
     if ([[updater delegate] respondsToSelector:@selector(pathToRelaunchForUpdater:)])
         pathToRelaunch = [[updater delegate] pathToRelaunchForUpdater:updater];
     NSString *relaunchToolPath = [relaunchPath stringByAppendingPathComponent: @"/Contents/MacOS/finish_installation"];
-    [NSTask launchedTaskWithLaunchPath: relaunchToolPath arguments:[NSArray arrayWithObjects:[host bundlePath], pathToRelaunch, [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]], tempDir, relaunch ? @"1" : @"0", nil]];
-
-    [NSApp terminate:self];
+    NSArray *arguments = @[[host bundlePath], pathToRelaunch, [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]], tempDir, relaunch ? @"1" : @"0"];
+	
+	if ([[updater delegate] respondsToSelector:@selector(updater:relaunchUsingPath:arguments:)]) {
+		// let the delegate relaunch the app.
+		if ([[updater delegate] updater:updater relaunchUsingPath:relaunchToolPath arguments:arguments]) {
+			[NSApp terminate:self];
+		}
+	}
+	[NSTask launchedTaskWithLaunchPath: relaunchToolPath arguments:arguments];
+	
+	[NSApp terminate:self];
 }
 
 - (void)cleanUpDownload
