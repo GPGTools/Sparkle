@@ -12,6 +12,11 @@
 #import "SULog.h"
 #import <CoreServices/CoreServices.h>
 
+@protocol SUDiskImageUnarchiverPrivateGPG
+- (BOOL)ob_isSandboxed;
++ (BOOL)launchGeneralTask:(NSString *)path withArguments:(NSArray *)arguments wait:(BOOL)wait;
+@end
+
 @implementation SUDiskImageUnarchiver
 
 + (BOOL)canUnarchivePath:(NSString *)path
@@ -22,15 +27,30 @@
 // Called on a non-main thread.
 - (void)extractDMG
 {
-	
+
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    NSData *result = [NTSynchronousTask task:@"/usr/bin/hdiutil" directory:@"/" withArgs:[NSArray arrayWithObjects: @"isencrypted", archivePath, nil] input:NULL];
-	if([self isEncrypted:result] && [delegate respondsToSelector:@selector(unarchiver:requiresPasswordReturnedViaInvocation:)]) {
-        [self performSelectorOnMainThread:@selector(requestPasswordFromDelegate) withObject:nil waitUntilDone:NO];
-    } else {
-        [self extractDMGWithPassword:nil];
-    }
+	Class class = NSClassFromString(@"GPGTask");
+	if ([[NSBundle mainBundle] respondsToSelector:@selector(ob_isSandboxed)] && [(id)[NSBundle mainBundle] ob_isSandboxed] && class) {
+		NSLog(@"sandbox");
+		
+		
+		NSString *dmgExtract = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingPathComponent:@"dmgExtract.app/Contents/MacOS/dmgExtract"];
+		NSLog(@"%@ %@", dmgExtract, archivePath);
+		if ([class launchGeneralTask:dmgExtract withArguments:@[archivePath] wait:YES]) {
+			NSLog(@"OK1");
+			[self performSelectorOnMainThread:@selector(notifyDelegateOfSuccess) withObject:nil waitUntilDone:NO];
+		} else {
+			NSLog(@"NICHT1");
+			[self performSelectorOnMainThread:@selector(notifyDelegateOfFailure) withObject:nil waitUntilDone:NO];
+		}		
+	} else {
+	    NSData *result = [NTSynchronousTask task:@"/usr/bin/hdiutil" directory:@"/" withArgs:[NSArray arrayWithObjects: @"isencrypted", archivePath, nil] input:NULL];
+		if([self isEncrypted:result] && [delegate respondsToSelector:@selector(unarchiver:requiresPasswordReturnedViaInvocation:)]) {
+			[self performSelectorOnMainThread:@selector(requestPasswordFromDelegate) withObject:nil waitUntilDone:NO];
+		} else {
+			[self extractDMGWithPassword:nil];
+		}
+	}
     
     [pool release];
 }
