@@ -57,7 +57,8 @@ BOOL extractDMG(NSString *dmgPath) {
 	
 finally:
 	if (needUnmount) {
-		[NSTask launchedTaskWithLaunchPath:@"/usr/bin/hdiutil" arguments:[NSArray arrayWithObjects:@"detach", mountPoint, @"-force", @"-quite", nil]];
+		NSTask *task = [NSTask launchedTaskWithLaunchPath:@"/usr/bin/hdiutil" arguments:[NSArray arrayWithObjects:@"detach", mountPoint, @"-force", @"-quiet", nil]];
+		[task waitUntilExit];
 	}
 	
 	return success;
