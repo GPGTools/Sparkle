@@ -267,6 +267,7 @@
 		frame.size.width = minimumWindowWidth;
 
 	[[self window] setFrame: frame display: NO];
+	[self.window setMinSize:frame.size];
 	[[self window] center];
 	
 	if (showReleaseNotes)	// UK 2007-09-18
