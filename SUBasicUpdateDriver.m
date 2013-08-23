@@ -228,8 +228,12 @@
             SULog(@"Package signature check on update failed: %@", error);
         }
 	}
-    
-    return [SUDSAVerifier validatePath:downloadedPath withEncodedDSASignature:DSASignature withPublicDSAKey:publicDSAKey];
+    SULog(@"Verifying DSA signature of %@", downloadedPath);
+	SULog(@"DSA Signature: %@", DSASignature);
+	SULog(@"DSA Key: %@", publicDSAKey);
+	BOOL valid = [SUDSAVerifier validatePath:downloadedPath withEncodedDSASignature:DSASignature withPublicDSAKey:publicDSAKey];
+	SULog(@"Now let's see if this is valid: %@", valid ? @"YES" : @"NO");
+	return valid;
 }
 
 - (void)downloadDidFinish:(NSURLDownload *)d
