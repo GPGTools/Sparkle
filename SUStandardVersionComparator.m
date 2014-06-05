@@ -13,6 +13,17 @@
 #import "SUVersionComparisonProtocol.h"
 #import "SUStandardVersionComparator.h"
 
+typedef enum {
+	nightly,
+	prerelease,
+	release
+} versionType;
+
+@interface NSObject (SupressWarning)
+- (instancetype)sharedOptions;
+@end
+
+
 @implementation SUStandardVersionComparator
 
 + (SUStandardVersionComparator *)defaultComparator
@@ -78,8 +89,46 @@ typedef enum {
     return parts;
 }
 
-- (NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB;
-{
+- (NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB {
+	
+	Class optionsClass = NSClassFromString(@"GPGOptions");
+	
+	if (optionsClass) {
+		versionType currentType = release;
+		versionType newType = release;
+		
+		NSCharacterSet *nightlyCharSet = [NSCharacterSet characterSetWithCharactersInString:@"nN"];
+		NSCharacterSet *prereleaseCharSet = [NSCharacterSet characterSetWithCharactersInString:@"abAB"];
+		
+		if ([versionA rangeOfCharacterFromSet:nightlyCharSet].length > 0) {
+			currentType = nightly;
+		} else if ([versionA rangeOfCharacterFromSet:prereleaseCharSet].length > 0) {
+			currentType = prerelease;
+		}
+		if ([versionB rangeOfCharacterFromSet:nightlyCharSet].length > 0) {
+			newType = nightly;
+		} else if ([versionB rangeOfCharacterFromSet:prereleaseCharSet].length > 0) {
+			newType = prerelease;
+		}
+		
+		if (currentType < newType) {
+			versionType wishedType = release;
+			NSString *appcastSource = [[optionsClass sharedOptions] stringForKey:@"UpdateSource"];
+			
+			if ([appcastSource isEqualToString:@"nightly"]) {
+				wishedType = nightly;
+			} else if ([appcastSource isEqualToString:@"prerelease"]) {
+				wishedType = prerelease;
+			}
+			
+			if (newType >= wishedType) {
+				return NSOrderedAscending;
+			}
+		}
+	}
+	
+	
+	
 	NSArray *partsA = [self splitVersionString:versionA];
     NSArray *partsB = [self splitVersionString:versionB];
     
