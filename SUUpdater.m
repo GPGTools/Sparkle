@@ -37,6 +37,11 @@
 
 @end
 
+@interface NSObject (SupressWarning)
+- (instancetype)sharedOptions;
+@end
+
+
 @implementation SUUpdater
 
 #pragma mark Initialization
@@ -414,10 +419,42 @@ static NSString * const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefault
 
 - (NSURL *)feedURL // *** MUST BE CALLED ON MAIN THREAD ***
 {
-	// A value in the user defaults overrides one in the Info.plist (so preferences panels can be created wherein users choose between beta / release feeds).
-	NSString *appcastString = [host objectForKey:SUFeedURLKey];
-	if( [delegate respondsToSelector: @selector(feedURLStringForUpdater:)] )
-		appcastString = [delegate feedURLStringForUpdater: self];
+	NSString *appcastString = nil;
+
+	if ([delegate respondsToSelector: @selector(feedURLStringForUpdater:)]) {
+		appcastString = [delegate feedURLStringForUpdater:self];
+	}
+	
+	if (!appcastString) {
+		Class optionsClass = NSClassFromString(@"GPGOptions");
+		if (optionsClass) {
+			NSString *updateSourceKey = @"UpdateSource";
+			
+			NSString *feedURLKey = @"SUFeedURL";
+			NSString *appcastSource = [[optionsClass sharedOptions] stringForKey:updateSourceKey];
+			if ([appcastSource isEqualToString:@"nightly"]) {
+				feedURLKey = @"SUFeedURL_nightly";
+			} else if ([appcastSource isEqualToString:@"prerelease"]) {
+				feedURLKey = @"SUFeedURL_prerelease";
+			} else if ([appcastSource isEqualToString:@"stable"]) {
+				feedURLKey = @"SUFeedURL";
+			} else {
+				NSString *version = [host version];
+				if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"nN"]].length > 0) {
+					feedURLKey = @"SUFeedURL_nightly";
+				} else if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"abAB"]].length > 0) {
+					feedURLKey = @"SUFeedURL_prerelease";
+				}
+			}
+			
+			appcastString = [host objectForInfoDictionaryKey:feedURLKey];
+		}
+	}
+	if (!appcastString) {
+		// A value in the user defaults overrides one in the Info.plist (so preferences panels can be created wherein users choose between beta / release feeds).
+		appcastString = [host objectForKey:SUFeedURLKey];
+	}
+
 	if (!appcastString) // Can't find an appcast string!
 		[NSException raise:@"SUNoFeedURL" format:@"You must specify the URL of the appcast as the SUFeedURL key in either the Info.plist or the user defaults!"];
 	NSCharacterSet* quoteSet = [NSCharacterSet characterSetWithCharactersInString: @"\"\'"]; // Some feed publishers add quotes; strip 'em.
