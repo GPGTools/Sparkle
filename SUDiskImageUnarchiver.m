@@ -31,16 +31,10 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	Class class = NSClassFromString(@"GPGTask");
 	if ([[NSBundle mainBundle] respondsToSelector:@selector(ob_isSandboxed)] && [(id)[NSBundle mainBundle] ob_isSandboxed] && class) {
-		NSLog(@"sandbox");
-		
-		
 		NSString *dmgExtract = [[[NSBundle bundleForClass:[self class]] resourcePath] stringByAppendingPathComponent:@"dmgExtract.app/Contents/MacOS/dmgExtract"];
-		NSLog(@"%@ %@", dmgExtract, archivePath);
 		if ([class launchGeneralTask:dmgExtract withArguments:@[archivePath] wait:YES]) {
-			NSLog(@"OK1");
 			[self performSelectorOnMainThread:@selector(notifyDelegateOfSuccess) withObject:nil waitUntilDone:NO];
 		} else {
-			NSLog(@"NICHT1");
 			[self performSelectorOnMainThread:@selector(notifyDelegateOfFailure) withObject:nil waitUntilDone:NO];
 		}		
 	} else {
