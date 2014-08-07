@@ -12,6 +12,7 @@
 #import "SUAppcastItem.h"
 #import "SUVersionComparisonProtocol.h"
 #import "SUStandardVersionComparator.h"
+#import "SUHost.h"
 
 typedef enum {
 	nightly,
@@ -90,45 +91,6 @@ typedef enum {
 }
 
 - (NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB {
-	
-	Class optionsClass = NSClassFromString(@"GPGOptions");
-	
-	if (optionsClass) {
-		versionType currentType = release;
-		versionType newType = release;
-		
-		NSCharacterSet *nightlyCharSet = [NSCharacterSet characterSetWithCharactersInString:@"nN"];
-		NSCharacterSet *prereleaseCharSet = [NSCharacterSet characterSetWithCharactersInString:@"abAB"];
-		
-		if ([versionA rangeOfCharacterFromSet:nightlyCharSet].length > 0) {
-			currentType = nightly;
-		} else if ([versionA rangeOfCharacterFromSet:prereleaseCharSet].length > 0) {
-			currentType = prerelease;
-		}
-		if ([versionB rangeOfCharacterFromSet:nightlyCharSet].length > 0) {
-			newType = nightly;
-		} else if ([versionB rangeOfCharacterFromSet:prereleaseCharSet].length > 0) {
-			newType = prerelease;
-		}
-		
-		if (currentType < newType) {
-			versionType wishedType = release;
-			NSString *appcastSource = [[optionsClass sharedOptions] stringForKey:@"UpdateSource"];
-			
-			if ([appcastSource isEqualToString:@"nightly"]) {
-				wishedType = nightly;
-			} else if ([appcastSource isEqualToString:@"prerelease"]) {
-				wishedType = prerelease;
-			}
-			
-			if (newType >= wishedType) {
-				return NSOrderedAscending;
-			}
-		}
-	}
-	
-	
-	
 	NSArray *partsA = [self splitVersionString:versionA];
     NSArray *partsB = [self splitVersionString:versionB];
     
@@ -216,3 +178,89 @@ typedef enum {
 
 
 @end
+
+
+@implementation SUGPGVersionComperator
+
+
++ (id)comperatorForHost:(SUHost *)aHost {
+	if (!aHost) {
+		return [super defaultComparator];
+	}
+	static NSMutableDictionary *sharedInstances = nil;
+	if (!sharedInstances) {
+		sharedInstances = [[NSMutableDictionary alloc] init];
+	}
+	NSString *key = aHost.bundle.bundleIdentifier;
+	
+	id comperator = [sharedInstances objectForKey:key];
+	
+	if (!comperator) {
+		comperator = [[self alloc] initForHost:aHost];
+		[sharedInstances setObject:comperator forKey:key];
+	}
+
+	return comperator;
+	
+}
+
+- (instancetype)initForHost:(SUHost *)aHost {
+	if ((self = [super init]) == nil) {
+		return nil;
+	}
+	
+	host = [aHost retain];
+	
+	return self;
+}
+
+- (void)dealloc {
+	[host release];
+	[super dealloc];
+}
+
+
+/*
+ * This comperator allows downgrades eg. from nightly to release, or similar.
+ * The check is based on the currently selected UpdateSource.
+ */
+- (NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB {
+	versionType currentType = release;
+	versionType newType = release;
+	
+	NSCharacterSet *nightlyCharSet = [NSCharacterSet characterSetWithCharactersInString:@"nN"];
+	NSCharacterSet *prereleaseCharSet = [NSCharacterSet characterSetWithCharactersInString:@"abAB"];
+	
+	if ([versionA rangeOfCharacterFromSet:nightlyCharSet].length > 0) {
+		currentType = nightly;
+	} else if ([versionA rangeOfCharacterFromSet:prereleaseCharSet].length > 0) {
+		currentType = prerelease;
+	}
+	if ([versionB rangeOfCharacterFromSet:nightlyCharSet].length > 0) {
+		newType = nightly;
+	} else if ([versionB rangeOfCharacterFromSet:prereleaseCharSet].length > 0) {
+		newType = prerelease;
+	}
+	
+	if (currentType < newType) {
+		versionType wishedType = release;
+		NSString *updateSourceKey = @"UpdateSource";
+		
+		NSString *appcastSource = [[host objectForKey:updateSourceKey] description];
+		
+		if ([appcastSource isEqualToString:@"nightly"]) {
+			wishedType = nightly;
+		} else if ([appcastSource isEqualToString:@"prerelease"]) {
+			wishedType = prerelease;
+		}
+		
+		if (newType >= wishedType) {
+			return NSOrderedAscending;
+		}
+	}
+	
+	return [super compareVersion:versionA toVersion:versionB];
+}
+
+@end
+

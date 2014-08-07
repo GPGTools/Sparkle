@@ -157,7 +157,7 @@
 					overHost: host
             installationPath: installationPath
 					delegate: self synchronously: NO
-					versionComparator: [SUStandardVersionComparator defaultComparator]];
+					versionComparator: [SUGPGVersionComperator comperatorForHost:host]];
 }
 
 - (void) installerFinishedForHost:(SUHost *)aHost

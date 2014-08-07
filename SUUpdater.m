@@ -426,29 +426,27 @@ static NSString * const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefault
 	}
 	
 	if (!appcastString) {
-		Class optionsClass = NSClassFromString(@"GPGOptions");
-		if (optionsClass) {
-			NSString *updateSourceKey = @"UpdateSource";
-			
-			NSString *feedURLKey = @"SUFeedURL";
-			NSString *appcastSource = [[optionsClass sharedOptions] stringForKey:updateSourceKey];
-			if ([appcastSource isEqualToString:@"nightly"]) {
+		NSString *updateSourceKey = @"UpdateSource";
+		NSString *feedURLKey = @"SUFeedURL";
+		
+		NSString *appcastSource = [[host objectForKey:updateSourceKey] description];
+
+		if ([appcastSource isEqualToString:@"nightly"]) {
+			feedURLKey = @"SUFeedURL_nightly";
+		} else if ([appcastSource isEqualToString:@"prerelease"]) {
+			feedURLKey = @"SUFeedURL_prerelease";
+		} else if ([appcastSource isEqualToString:@"stable"]) {
+			feedURLKey = @"SUFeedURL";
+		} else {
+			NSString *version = [host version];
+			if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"nN"]].length > 0) {
 				feedURLKey = @"SUFeedURL_nightly";
-			} else if ([appcastSource isEqualToString:@"prerelease"]) {
+			} else if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"abAB"]].length > 0) {
 				feedURLKey = @"SUFeedURL_prerelease";
-			} else if ([appcastSource isEqualToString:@"stable"]) {
-				feedURLKey = @"SUFeedURL";
-			} else {
-				NSString *version = [host version];
-				if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"nN"]].length > 0) {
-					feedURLKey = @"SUFeedURL_nightly";
-				} else if ([version rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"abAB"]].length > 0) {
-					feedURLKey = @"SUFeedURL_prerelease";
-				}
 			}
-			
-			appcastString = [host objectForInfoDictionaryKey:feedURLKey];
 		}
+		
+		appcastString = [host objectForInfoDictionaryKey:feedURLKey];
 	}
 	if (!appcastString) {
 		// A value in the user defaults overrides one in the Info.plist (so preferences panels can be created wherein users choose between beta / release feeds).

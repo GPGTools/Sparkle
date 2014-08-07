@@ -53,8 +53,13 @@
 		comparator = [[updater delegate] versionComparatorForUpdater:updater];
 	
 	// If we don't get a comparator from the delegate, use the default comparator
-	if (!comparator)
-		comparator = [SUStandardVersionComparator defaultComparator];
+	if (!comparator) {
+		SUHost *aHost = self.host;
+		if (!aHost) {
+			aHost = [[[SUHost alloc] initWithBundle:updater.hostBundle] autorelease];
+		}
+		comparator = [SUGPGVersionComperator comperatorForHost:aHost];
+	}
 	
 	return comparator;	
 }

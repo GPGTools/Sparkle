@@ -33,4 +33,16 @@
 - (NSComparisonResult)compareVersion:(NSString *)versionA toVersion:(NSString *)versionB;
 @end
 
+
+@interface SUGPGVersionComperator : SUStandardVersionComparator {
+	SUHost *host;
+}
+
++ (id)comperatorForHost:(SUHost *)host;
+
+@end
+
+
+
+
 #endif
