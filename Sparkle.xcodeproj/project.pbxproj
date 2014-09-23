@@ -12,6 +12,7 @@
 		3089B7751747BC6700939423 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3089B7501747B31A00939423 /* Cocoa.framework */; };
 		3089B77D1747BC6700939423 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3089B77C1747BC6700939423 /* main.m */; };
 		3089B78E1747BCA700939423 /* dmgExtract.app in Resources */ = {isa = PBXBuildFile; fileRef = 3089B7741747BC6700939423 /* dmgExtract.app */; };
+		308AC56519D1BF5D00F5A2CD /* ClassPrefixes.h in Headers */ = {isa = PBXBuildFile; fileRef = 308AC56219D1BE9B00F5A2CD /* ClassPrefixes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3772FEA913DE0B6B00F79537 /* SUVersionDisplayProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3772FEA813DE0B6B00F79537 /* SUVersionDisplayProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		525A2790133D6AE900FD8D70 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525A278F133D6AE900FD8D70 /* Cocoa.framework */; };
 		525A27A0133D6B9700FD8D70 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525A278F133D6AE900FD8D70 /* Cocoa.framework */; };
@@ -210,6 +211,7 @@
 		3089B7741747BC6700939423 /* dmgExtract.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dmgExtract.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3089B7781747BC6700939423 /* dmgExtract-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dmgExtract-Info.plist"; sourceTree = "<group>"; };
 		3089B77C1747BC6700939423 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		308AC56219D1BE9B00F5A2CD /* ClassPrefixes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClassPrefixes.h; sourceTree = "<group>"; };
 		3772FEA813DE0B6B00F79537 /* SUVersionDisplayProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUVersionDisplayProtocol.h; sourceTree = "<group>"; };
 		525A278F133D6AE900FD8D70 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		550347001370023A00AE7681 /* Sparkle.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Sparkle.icns; sourceTree = "<group>"; };
@@ -726,6 +728,7 @@
 				61299A5F09CA6EB100B7442F /* SUConstants.m */,
 				55C14F04136EF6DB00649790 /* SULog.h */,
 				55C14F05136EF6DB00649790 /* SULog.m */,
+				308AC56219D1BE9B00F5A2CD /* ClassPrefixes.h */,
 			);
 			includeInIndex = 1;
 			name = "Other Sources";
@@ -828,6 +831,7 @@
 				61B5FC0D09C4FC8200B25A18 /* SUAppcast.h in Headers */,
 				61B5FC7009C51F4A00B25A18 /* SUAppcastItem.h in Headers */,
 				61B5FCDF09C52A9F00B25A18 /* SUUpdateAlert.h in Headers */,
+				308AC56519D1BF5D00F5A2CD /* ClassPrefixes.h in Headers */,
 				6196CFF909C72148000DC222 /* SUStatusController.h in Headers */,
 				61299A2F09CA2DAB00B7442F /* SUDSAVerifier.h in Headers */,
 				61299A4A09CA2DD000B7442F /* SUPlainInstallerInternals.h in Headers */,
