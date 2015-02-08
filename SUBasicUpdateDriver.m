@@ -28,19 +28,6 @@
 
 - (NSString *)userAgentString {
 	// Build the user agent string, from the installed Tool, Libmacgpg and OS version.
-	BOOL sendingSystemProfile = [updater sendsSystemProfile];
-	
-	// Let's only send the system profiling information once per week at most, so we normalize daily-checkers vs. biweekly-checkers and the such.
-	NSDate *lastSubmitDate = [host objectForUserDefaultsKey:SULastProfileSubmitDateKey];
-	if(!lastSubmitDate)
-		lastSubmitDate = [NSDate distantPast];
-	const NSTimeInterval oneWeek = 60 * 60 * 24 * 7;
-	sendingSystemProfile &= (-[lastSubmitDate timeIntervalSinceNow] >= oneWeek);
-	
-	if (sendingSystemProfile) {
-		[host setObject:[NSDate date] forUserDefaultsKey:SULastProfileSubmitDateKey];
-	}
-
 	
 	NSMutableDictionary *simpleProfile = [NSMutableDictionary dictionary];
 	NSArray *profile = [host systemProfile];
@@ -52,15 +39,29 @@
 	[string appendFormat:@"%@/%@-%@ ", [simpleProfile objectForKey:@"appName"], [simpleProfile objectForKey:@"appBuild"], [simpleProfile objectForKey:@"appVersion"]];
 	[string appendFormat:@"Libmacgpg/%@-%@ ", [simpleProfile objectForKey:@"lmBuild"], [simpleProfile objectForKey:@"lmVersion"]];
 	[string appendFormat:@"osx/%@ ", [simpleProfile objectForKey:@"osVersion"]];
+
+	
+	// Let's only send the system profiling information once per week at most, so we normalize daily-checkers vs. biweekly-checkers and the such.
+	NSDate *lastSubmitDate = [host objectForUserDefaultsKey:SULastProfileSubmitDateKey];
+	if(!lastSubmitDate)
+		lastSubmitDate = [NSDate distantPast];
+	const NSTimeInterval oneWeek = 60 * 60 * 24 * 7;
+	BOOL sendingSystemProfile = (-[lastSubmitDate timeIntervalSinceNow] >= oneWeek);
+	
 	if (sendingSystemProfile) {
 		[string appendString:@"profile "];
 		
-		[simpleProfile removeObjectsForKeys:[NSArray arrayWithObjects:@"appName", @"appBuild", @"appVersion", @"lmBuild", @"lmVersion", @"osVersion", nil]];
-		
-		for (NSString *key in simpleProfile) {
-			NSString *value = [simpleProfile objectForKey:key];
-			[string appendFormat:@"%@/%@ ", key, value];
+		if ([updater sendsSystemProfile]) {
+			// Send more detailed profile, if any.
+			[simpleProfile removeObjectsForKeys:[NSArray arrayWithObjects:@"appName", @"appBuild", @"appVersion", @"lmBuild", @"lmVersion", @"osVersion", nil]];
+			
+			for (NSString *key in simpleProfile) {
+				NSString *value = [simpleProfile objectForKey:key];
+				[string appendFormat:@"%@/%@ ", key, value];
+			}
 		}
+		
+		[host setObject:[NSDate date] forUserDefaultsKey:SULastProfileSubmitDateKey];
 	}
 	
 	return string;
