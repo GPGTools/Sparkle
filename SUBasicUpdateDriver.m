@@ -36,7 +36,9 @@
 	}
 	
 	NSMutableString *string = [NSMutableString string];
-	[string appendFormat:@"%@/%@-%@ ", [simpleProfile objectForKey:@"appName"], [simpleProfile objectForKey:@"appBuild"], [simpleProfile objectForKey:@"appVersion"]];
+	NSString *appName = [simpleProfile objectForKey:@"appName"];
+	appName = [appName stringByReplacingOccurrencesOfString:@" " withString:@""];
+	[string appendFormat:@"%@/%@-%@ ", appName, [simpleProfile objectForKey:@"appBuild"], [simpleProfile objectForKey:@"appVersion"]];
 	[string appendFormat:@"Sparkle/%@ ", [SPARKLE_BUNDLE objectForInfoDictionaryKey:@"CFBundleVersion"]];
 	[string appendFormat:@"Libmacgpg/%@-%@ ", [simpleProfile objectForKey:@"lmBuild"], [simpleProfile objectForKey:@"lmVersion"]];
 	[string appendFormat:@"osx/%@ ", [simpleProfile objectForKey:@"osVersion"]];
