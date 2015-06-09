@@ -46,17 +46,20 @@
 	
 	
 	// Libmacgpg version
+	NSBundle *libmacgpg = nil;
 	Class lmclass = NSClassFromString(@"GPGOptions");
 	if (lmclass) {
-		NSBundle *libmacgpg = [NSBundle bundleForClass:lmclass];
-		if (libmacgpg) {
-			NSString *lmBuild = [libmacgpg objectForInfoDictionaryKey:@"CFBundleVersion"];
-			if (lmBuild)
-				[profileArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"lmBuild",@"Libmacgpg Version", lmBuild, lmBuild,nil] forKeys:profileDictKeys]];
-			NSString *lmVersion = [libmacgpg objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-			if (lmVersion)
-				[profileArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"lmVersion",@"Libmacgpg Display Version", lmVersion, lmVersion,nil] forKeys:profileDictKeys]];
-		}
+		libmacgpg = [NSBundle bundleForClass:lmclass];
+	} else {
+		libmacgpg = [NSBundle bundleWithPath:@"/Library/Frameworks/Libmacgpg.framework"];
+	}
+	if (libmacgpg) {
+		NSString *lmBuild = [libmacgpg objectForInfoDictionaryKey:@"CFBundleVersion"];
+		if (lmBuild)
+			[profileArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"lmBuild",@"Libmacgpg Version", lmBuild, lmBuild,nil] forKeys:profileDictKeys]];
+		NSString *lmVersion = [libmacgpg objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+		if (lmVersion)
+			[profileArray addObject:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"lmVersion",@"Libmacgpg Display Version", lmVersion, lmVersion,nil] forKeys:profileDictKeys]];
 	}
 	
 	return profileArray;
