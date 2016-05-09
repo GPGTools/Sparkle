@@ -10,6 +10,7 @@
 #import "SUPlainInstaller.h"
 #import "SUPackageInstaller.h"
 #import "SUGuidedPackageInstaller.h"
+#import "GPGPackageInstaller.h"
 #import "SUHost.h"
 #import "SUConstants.h"
 #import "SULog.h"
@@ -113,7 +114,7 @@
         [self finishInstallationToPath:installationPath withResult:NO error:[NSError errorWithDomain:SUSparkleErrorDomain code:SUMissingUpdateError userInfo:@{ NSLocalizedDescriptionKey: @"Couldn't find an appropriate update in the downloaded package." }] completionHandler:completionHandler];
     } else {
         if (isPackage && isGuided) {
-            [SUGuidedPackageInstaller performInstallationToPath:installationPath fromPath:newAppDownloadPath host:host versionComparator:comparator completionHandler:completionHandler];
+            [GPGPackageInstaller performInstallationToPath:installationPath fromPath:newAppDownloadPath host:host versionComparator:comparator completionHandler:completionHandler];
         } else if (isPackage) {
             [SUPackageInstaller performInstallationToPath:installationPath fromPath:newAppDownloadPath host:host versionComparator:comparator completionHandler:completionHandler];
         } else {
