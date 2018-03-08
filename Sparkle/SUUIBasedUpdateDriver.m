@@ -83,6 +83,10 @@
     // there may be no way for the application to be activated to make it visible again.
     if ([SUApplicationInfo isBackgroundApplication:[NSApplication sharedApplication]]) {
         [[self.updateAlert window] setHidesOnDeactivate:NO];
+        if (![NSApp isActive] && [self shouldDisableKeyboardShortcutForInstallButton]) {
+            // Disable keyboard shortcut (enter button), if the dirvers wants this.
+            [self.updateAlert disableKeyboardShortcutForInstallButton];
+        }
         [NSApp activateIgnoringOtherApps:YES];
     }
 
@@ -262,7 +266,8 @@
 
 - (void)unarchiverDidFinish:(id)__unused ua
 {
-    if (self.automaticallyInstallUpdates) {
+    if (YES) {
+        // No need to wait. GPG Suite Updater has no other windows.
         [self installWithToolAndRelaunch:YES];
         return;
     }

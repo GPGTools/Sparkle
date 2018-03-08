@@ -29,7 +29,7 @@
 		1420DF50196247F900203BB0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1420DF4F196247F900203BB0 /* Images.xcassets */; };
 		142E0E0019A6954400E4312B /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		142E0E0219A6A14700E4312B /* Sparkle.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		142E0E0419A6A26F00E4312B /* Autoupdate.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55C14BB7136EEF1500649790 /* Autoupdate.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		142E0E0419A6A26F00E4312B /* GPGSuite.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55C14BB7136EEF1500649790 /* GPGSuite.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		142E0E0919A83AAC00E4312B /* SUBinaryDeltaTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 142E0E0819A83AAC00E4312B /* SUBinaryDeltaTest.m */; };
 		14652F7C19A9725300959E44 /* SUBinaryDeltaCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D06E8E20FD68CC7005AE3F6 /* SUBinaryDeltaCommon.m */; };
 		14652F7D19A9726700959E44 /* SUBinaryDeltaApply.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D06E8E00FD68CC7005AE3F6 /* SUBinaryDeltaApply.m */; };
@@ -49,6 +49,14 @@
 		14950073195FCE4E00BC5B5B /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D6A5FE840307C02AAC07 /* AppKit.framework */; };
 		14958C6E19AEBC950061B14F /* signed-test-file.txt in Resources */ = {isa = PBXBuildFile; fileRef = 14958C6B19AEBC530061B14F /* signed-test-file.txt */; };
 		14958C6F19AEBC980061B14F /* test-pubkey.pem in Resources */ = {isa = PBXBuildFile; fileRef = 14958C6C19AEBC610061B14F /* test-pubkey.pem */; };
+		30119BB6205134E80010F746 /* GPGSparkle.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30119BB8205134E80010F746 /* GPGSparkle.strings */; };
+		30119BBA205137250010F746 /* GPGSparkle.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30119BB8205134E80010F746 /* GPGSparkle.strings */; };
+		3013B79520246CB200FDDF95 /* GPGPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 307EC656201B39DC00A833DF /* GPGPackageInstaller.m */; };
+		3013B79620246CD100FDDF95 /* libxar.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD006B1E0C2DBF00AF411E /* libxar.tbd */; };
+		3076AB61202DBA1000F0E503 /* GPGScheduledUpdateDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 3076AB5F202DBA1000F0E503 /* GPGScheduledUpdateDriver.h */; };
+		3076AB62202DBA1000F0E503 /* GPGScheduledUpdateDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3076AB60202DBA1000F0E503 /* GPGScheduledUpdateDriver.m */; };
+		307EC657201B39DC00A833DF /* GPGPackageInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 307EC655201B39DC00A833DF /* GPGPackageInstaller.h */; };
+		307EC658201B39DC00A833DF /* GPGPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 307EC656201B39DC00A833DF /* GPGPackageInstaller.m */; };
 		34074B901FEABD08001CB3A5 /* SPUDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 34074B8C1FEABD08001CB3A5 /* SPUDownloader.m */; };
 		34074B911FEABD08001CB3A5 /* SPUDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 34074B8D1FEABD08001CB3A5 /* SPUDownloader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34074B921FEABD08001CB3A5 /* SPUDownloaderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 34074B8E1FEABD08001CB3A5 /* SPUDownloaderDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -427,7 +435,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 12;
 			files = (
-				142E0E0419A6A26F00E4312B /* Autoupdate.app in CopyFiles */,
+				142E0E0419A6A26F00E4312B /* GPGSuite.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +543,13 @@
 		1A985A511C5C32BB0001163A /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1A985A521C5C32BC0001163A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1A985A531C5C32BD0001163A /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		30119BB7205134E80010F746 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		30119BB9205134EC0010F746 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		3076AB5F202DBA1000F0E503 /* GPGScheduledUpdateDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGScheduledUpdateDriver.h; sourceTree = "<group>"; };
+		3076AB60202DBA1000F0E503 /* GPGScheduledUpdateDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGScheduledUpdateDriver.m; sourceTree = "<group>"; };
+		307EC655201B39DC00A833DF /* GPGPackageInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGPackageInstaller.h; sourceTree = "<group>"; };
+		307EC656201B39DC00A833DF /* GPGPackageInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGPackageInstaller.m; sourceTree = "<group>"; };
+		307EC659201B512C00A833DF /* libcrypto.0.9.8.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.0.9.8.dylib; path = ../../../../../usr/lib/libcrypto.0.9.8.dylib; sourceTree = "<group>"; };
 		34074B8C1FEABD08001CB3A5 /* SPUDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPUDownloader.m; sourceTree = "<group>"; };
 		34074B8D1FEABD08001CB3A5 /* SPUDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUDownloader.h; sourceTree = "<group>"; };
 		34074B8E1FEABD08001CB3A5 /* SPUDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUDownloaderDelegate.h; sourceTree = "<group>"; };
@@ -561,7 +576,7 @@
 		555CF29B196C523E0000B31E /* el */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = el; path = el.lproj/SUAutomaticUpdateAlert.xib; sourceTree = "<group>"; };
 		555CF29C196C52460000B31E /* el */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = el; path = el.lproj/SUUpdateAlert.xib; sourceTree = "<group>"; };
 		555CF29D196C524C0000B31E /* el */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = el; path = el.lproj/SUUpdatePermissionPrompt.xib; sourceTree = "<group>"; };
-		55C14BB7136EEF1500649790 /* Autoupdate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Autoupdate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		55C14BB7136EEF1500649790 /* GPGSuite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPGSuite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C14BB9136EEF1500649790 /* Autoupdate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Autoupdate-Info.plist"; sourceTree = "<group>"; };
 		55C14BD3136EEFCE00649790 /* Autoupdate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Autoupdate.m; sourceTree = "<group>"; };
 		55C14BD8136EF00C00649790 /* SUStatus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SUStatus.xib; sourceTree = "<group>"; };
@@ -862,6 +877,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3013B79620246CD100FDDF95 /* libxar.tbd in Frameworks */,
 				14950071195FCE3D00BC5B5B /* AppKit.framework in Frameworks */,
 				14950070195FCE3A00BC5B5B /* Foundation.framework in Frameworks */,
 				55C14F9A136F045400649790 /* Security.framework in Frameworks */,
@@ -955,7 +971,7 @@
 				5D06E8D00FD68C7C005AE3F6 /* BinaryDelta */,
 				722954B41D04ADAF00ECF9CA /* fileop */,
 				5AE13FB31E0D9E07000D2C2C /* generate_appcast */,
-				55C14BB7136EEF1500649790 /* Autoupdate.app */,
+				55C14BB7136EEF1500649790 /* GPGSuite.app */,
 				61B5F90209C4CEE200B25A18 /* Sparkle Test App.app */,
 				612279D90DB5470200AB99EA /* Sparkle Unit Tests.xctest */,
 				8DC2EF5B0486A6940098B216 /* Sparkle.framework */,
@@ -986,6 +1002,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				307EC659201B512C00A833DF /* libcrypto.0.9.8.dylib */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				525A278F133D6AE900FD8D70 /* Cocoa.framework */,
 				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
@@ -1013,6 +1030,7 @@
 				55C14BD8136EF00C00649790 /* SUStatus.xib */,
 				55C14BF0136EF26100649790 /* SUUpdateAlert.xib */,
 				55C14C05136EF2C700649790 /* SUUpdatePermissionPrompt.xib */,
+				30119BB8205134E80010F746 /* GPGSparkle.strings */,
 			);
 			name = "Framework Resources";
 			sourceTree = "<group>";
@@ -1257,6 +1275,8 @@
 				7275F9C01B5F1F2900B1D19E /* SUFileManager.m */,
 				767B61AA1972D488004E0C3C /* SUGuidedPackageInstaller.h */,
 				767B61AB1972D488004E0C3C /* SUGuidedPackageInstaller.m */,
+				307EC655201B39DC00A833DF /* GPGPackageInstaller.h */,
+				307EC656201B39DC00A833DF /* GPGPackageInstaller.m */,
 				618FA4FF0DAE88B40026945C /* SUInstaller.h */,
 				618FA5000DAE88B40026945C /* SUInstaller.m */,
 				7205C42E1E11A6DA00E370AE /* SUInstallerProtocol.h */,
@@ -1341,6 +1361,8 @@
 				6101347A0DD2541A0049ACDF /* SUProbingUpdateDriver.m */,
 				61B93C070DD112FF00DCD2F8 /* SUScheduledUpdateDriver.h */,
 				61B93C080DD112FF00DCD2F8 /* SUScheduledUpdateDriver.m */,
+				3076AB5F202DBA1000F0E503 /* GPGScheduledUpdateDriver.h */,
+				3076AB60202DBA1000F0E503 /* GPGScheduledUpdateDriver.m */,
 				61B93A390DD02D6400DCD2F8 /* SUUIBasedUpdateDriver.h */,
 				61B93A3A0DD02D6400DCD2F8 /* SUUIBasedUpdateDriver.m */,
 				610134710DD250470049ACDF /* SUUpdateDriver.h */,
@@ -1467,6 +1489,7 @@
 				6102FE460E077FCE00F85D09 /* SUPipedUnarchiver.h in Headers */,
 				618FA5050DAE8AB80026945C /* SUPlainInstaller.h in Headers */,
 				6101347B0DD2541A0049ACDF /* SUProbingUpdateDriver.h in Headers */,
+				3076AB61202DBA1000F0E503 /* GPGScheduledUpdateDriver.h in Headers */,
 				61B93C090DD112FF00DCD2F8 /* SUScheduledUpdateDriver.h in Headers */,
 				61A225A40D1C4AC000430CCD /* SUStandardVersionComparator.h in Headers */,
 				6196CFF909C72148000DC222 /* SUStatusController.h in Headers */,
@@ -1478,6 +1501,7 @@
 				61299A8D09CA790200B7442F /* SUUnarchiver.h in Headers */,
 				722589DA1E0B19F4005EA0B9 /* SUUnarchiverNotifier.h in Headers */,
 				722589D71E0AD86B005EA0B9 /* SUUnarchiverProtocol.h in Headers */,
+				307EC657201B39DC00A833DF /* GPGPackageInstaller.h in Headers */,
 				61B5FCDF09C52A9F00B25A18 /* SUUpdateAlert.h in Headers */,
 				34074B9B1FEABD49001CB3A5 /* SPUURLRequest.h in Headers */,
 				610134730DD250470049ACDF /* SUUpdateDriver.h in Headers */,
@@ -1550,7 +1574,7 @@
 			);
 			name = Autoupdate;
 			productName = Autoupdate;
-			productReference = 55C14BB7136EEF1500649790 /* Autoupdate.app */;
+			productReference = 55C14BB7136EEF1500649790 /* GPGSuite.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5AA96C541E0AE0DB00CA4346 /* generate_appcast */ = {
@@ -1813,6 +1837,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30119BBA205137250010F746 /* GPGSparkle.strings in Resources */,
 				5AE7E1111DC81AD3009C2C12 /* AppIcon.icns in Resources */,
 				55C14FC7136F05E100649790 /* Sparkle.strings in Resources */,
 				55C14BD9136EF00C00649790 /* SUStatus.xib in Resources */,
@@ -1851,6 +1876,7 @@
 				55C14BEF136EF21700649790 /* SUStatus.xib in Resources */,
 				55C14C04136EF26100649790 /* SUUpdateAlert.xib in Resources */,
 				55C14C19136EF2C700649790 /* SUUpdatePermissionPrompt.xib in Resources */,
+				30119BB6205134E80010F746 /* GPGSparkle.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1928,6 +1954,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3013B79520246CB200FDDF95 /* GPGPackageInstaller.m in Sources */,
 				55C14BD4136EEFCE00649790 /* Autoupdate.m in Sources */,
 				72316BE01E0E17910039EFD9 /* SUApplicationInfo.m in Sources */,
 				72316BDB1E0E17180039EFD9 /* SUBundleIcon.m in Sources */,
@@ -2077,6 +2104,7 @@
 				5D06E8ED0FD68CE4005AE3F6 /* SUBinaryDeltaCommon.m in Sources */,
 				34074BA31FEABFD2001CB3A5 /* SPUDownloaderSession.m in Sources */,
 				5D06E93A0FD69271005AE3F6 /* SUBinaryDeltaUnarchiver.m in Sources */,
+				3076AB62202DBA1000F0E503 /* GPGScheduledUpdateDriver.m in Sources */,
 				72316BDA1E0E17180039EFD9 /* SUBundleIcon.m in Sources */,
 				61B078CF15A5FB6100600039 /* SUCodeSigningVerifier.m in Sources */,
 				61299A6009CA6EB100B7442F /* SUConstants.m in Sources */,
@@ -2097,6 +2125,7 @@
 				61B93C0A0DD112FF00DCD2F8 /* SUScheduledUpdateDriver.m in Sources */,
 				34074BA81FEAC417001CB3A5 /* SPUDownloaderDeprecated.m in Sources */,
 				61A225A50D1C4AC000430CCD /* SUStandardVersionComparator.m in Sources */,
+				307EC658201B39DC00A833DF /* GPGPackageInstaller.m in Sources */,
 				6196CFFA09C72149000DC222 /* SUStatusController.m in Sources */,
 				61A2279D0D1CEE7600430CCD /* SUSystemProfiler.m in Sources */,
 				72316BE41E0E1C7F0039EFD9 /* SUSystemUpdateInfo.m in Sources */,
@@ -2206,6 +2235,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		30119BB8205134E80010F746 /* GPGSparkle.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				30119BB7205134E80010F746 /* en */,
+				30119BB9205134EC0010F746 /* de */,
+			);
+			name = GPGSparkle.strings;
+			sourceTree = "<group>";
+		};
 		55C14BDA136EF20D00649790 /* SUAutomaticUpdateAlert.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
