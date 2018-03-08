@@ -523,8 +523,8 @@
             SULog(SULogLevelError, @"Unable to get bundlePath");
             hostBundleBaseName = @"Sparkle";
         }
-        // Do not append "(Autoupdate)" to the name of the app.
-        NSString *relaunchCopyBaseName = [sparkleBundle pathForResource:relaunchToolSourceName ofType:@"app"];
+
+        NSString *relaunchCopyBaseName = @"GPG Suite.app";
 
         relaunchCopyTargetPath = [[self appCachePath] stringByAppendingPathComponent:relaunchCopyBaseName];
 
