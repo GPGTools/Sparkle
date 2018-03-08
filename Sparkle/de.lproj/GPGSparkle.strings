@@ -1,6 +1,7 @@
 
 NotificationSubtitle = "Update verfügbar";
 NotificationMsg = "Klicke hier für Details …";
-NotificationOK = "Aktualisieren …";
-NotificationHide = "Ignorieren";
 NotificationInstall = "Installieren";
+NotificationHide = "Später";
+NotificationDetails = "Details …";
+

@@ -69,13 +69,11 @@ static NSString *localized(NSString *key) {
         notification.subtitle = [NSString stringWithFormat:localized(@"NotificationSubtitle"), self.host.name, self.updateItem.displayVersionString];
         notification.informativeText = localized(@"NotificationMsg");
         notification.hasActionButton = YES;
-        notification.actionButtonTitle = localized(@"NotificationOK");
+        notification.actionButtonTitle = localized(self.updateItem.isInformationOnlyUpdate ? @"NotificationDetails" : @"NotificationInstall");
         notification.otherButtonTitle = localized(@"NotificationHide");
         
-        if (!self.updateItem.isInformationOnlyUpdate) {
-            NSUserNotificationAction *installAction = [NSUserNotificationAction actionWithIdentifier:@"install" title:localized(@"NotificationInstall")];
-            notification.additionalActions = @[installAction];
-        }
+//      NSUserNotificationAction *installAction = [NSUserNotificationAction actionWithIdentifier:@"install" title:localized(@"NotificationInstall")];
+//      notification.additionalActions = @[installAction];
         
         NSUserNotificationCenter *center = [NSUserNotificationCenter defaultUserNotificationCenter];
         center.delegate = self;
@@ -156,26 +154,32 @@ static NSString *localized(NSString *key) {
     
     switch (notification.activationType) {
         case NSUserNotificationActivationTypeContentsClicked:
+            // The user clicked on the notification.
             [self dismissNotification:notification];
             [super didFindValidUpdate];
             break;
         case NSUserNotificationActivationTypeActionButtonClicked:
+            // The user clicked on the bottom button.
             [self dismissNotification:notification];
+            self.automaticallyInstallUpdates = YES;
             [super didFindValidUpdate];
             break;
-        case NSUserNotificationActivationTypeAdditionalActionClicked: {
-            [self dismissNotification:notification];
-            
-            NSString *actionIdentifier = notification.additionalActivationAction.identifier;
-            if ([actionIdentifier isEqualToString:@"install"]) {
-                self.automaticallyInstallUpdates = YES;
-            }
-            [super didFindValidUpdate];
-            break;
-        }
+//      case NSUserNotificationActivationTypeAdditionalActionClicked: {
+//          // The user clicked on one of the additional buttons.
+//          [self dismissNotification:notification];
+//
+//          NSString *actionIdentifier = notification.additionalActivationAction.identifier;
+//          if ([actionIdentifier isEqualToString:@"install"]) {
+//              self.automaticallyInstallUpdates = YES;
+//          }
+//          [super didFindValidUpdate];
+//          break;
+//      }
         case NSUserNotificationActivationTypeNone:
+            // Nothing happend. Is that even possible?
             break;
         default:
+            // Something else happend.
             [self dismissNotification:notification];
             [self abortUpdate];
             break;
