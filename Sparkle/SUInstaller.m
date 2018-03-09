@@ -11,6 +11,7 @@
 #import "SUPlainInstaller.h"
 #import "SUPackageInstaller.h"
 #import "SUGuidedPackageInstaller.h"
+#import "GPGPackageInstaller.h"
 #import "SUHost.h"
 #import "SULog.h"
 #import "SUErrors.h"
@@ -125,7 +126,8 @@
     
     id <SUInstallerProtocol> installer;
     if (isPackage && isGuided) {
-        installer = [[SUGuidedPackageInstaller alloc] initWithPackagePath:newDownloadPath installationPath:host.bundlePath fileOperationToolPath:fileOperationToolPath];
+        // Use the GPGPackageInstaller for guided package installation.
+        installer = [[GPGPackageInstaller alloc] initWithPackagePath:newDownloadPath installationPath:host.bundlePath fileOperationToolPath:fileOperationToolPath];
     } else if (isPackage) {
         installer = [[SUPackageInstaller alloc] initWithPackagePath:newDownloadPath installationPath:host.bundlePath];
     } else {

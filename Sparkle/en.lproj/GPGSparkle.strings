@@ -1,0 +1,13 @@
+
+NotificationSubtitle = "Update available";
+NotificationMsg = "Click here for details…";
+NotificationInstall = "Install";
+NotificationHide = "Not Now";
+NotificationDetails = "Details…";
+
+
+ErrorInstallOriginal = "\n\nPlease download and install GPG Suite from https://gpgtools.org to ensure you have an original version.";
+ErrorTampered = "Someone tampered with your installation of GPG Suite!";
+ErrorNotPkg = "The update is not valid!";
+ErrorExtraction = "The update could not be extracted!";
+ErrorVerify = "The update could not be verified!";
