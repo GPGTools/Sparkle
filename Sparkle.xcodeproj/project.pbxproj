@@ -557,6 +557,9 @@
 		30A8DCC320529855009C273D /* pt_PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_PT; path = pt_PT.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		30A8DCC42052985C009C273D /* pt_BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_BR; path = pt_BR.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		30A8DCC52052986A009C273D /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		30C3BF48205BC6FB00E02998 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		30C3BF49205BC71200E02998 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		30C3BF4A205BC71B00E02998 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		34074B8C1FEABD08001CB3A5 /* SPUDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPUDownloader.m; sourceTree = "<group>"; };
 		34074B8D1FEABD08001CB3A5 /* SPUDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUDownloader.h; sourceTree = "<group>"; };
 		34074B8E1FEABD08001CB3A5 /* SPUDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUDownloaderDelegate.h; sourceTree = "<group>"; };
@@ -2253,6 +2256,9 @@
 				30A8DCC320529855009C273D /* pt_PT */,
 				30A8DCC42052985C009C273D /* pt_BR */,
 				30A8DCC52052986A009C273D /* sv */,
+				30C3BF48205BC6FB00E02998 /* ca */,
+				30C3BF49205BC71200E02998 /* es */,
+				30C3BF4A205BC71B00E02998 /* el */,
 			);
 			name = GPGSparkle.strings;
 			sourceTree = "<group>";
