@@ -1,11 +1,4 @@
 
-NotificationSubtitle = "Hi ha una actualització disponible";
-NotificationMsg = "Feu clic per a més detalls...";
-NotificationInstall = "Instal·la";
-NotificationHide = "Ara no";
-NotificationDetails = "Detalls...";
-
-
 ErrorInstallOriginal = "\n\nBaixeu i instal·leu el GPG Suite des de https://gpgtools.org per a estar segur que teniu una versió original.";
 ErrorTampered = "Algú ha alterat la instal·lació del GPG Suite!";
 ErrorNotPkg = "L'actualització no és vàlida!";

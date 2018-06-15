@@ -1,11 +1,4 @@
 
-NotificationSubtitle = "Atualização disponível";
-NotificationMsg = "Clique para ver detalhes…";
-NotificationInstall = "Instalar";
-NotificationHide = "Agora Não";
-NotificationDetails = "Detalhes…";
-
-
 ErrorInstallOriginal = "\n\nTransfira e instale a GPG Suite de https://gpgtools.org para certificar-se de que você tenha uma versão original.";
 ErrorTampered = "Alguém adulterou a instalação da GPG Suite.";
 ErrorNotPkg = "A atualização não é válida.";
