@@ -309,7 +309,9 @@
 
 - (void)abortUpdateWithError:(NSError *)error
 {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    // This method will be called from any thread.
+    
+    void (^dispatchBlock)() = ^{
         if (self.showErrors) {
             NSAlert *alert = [[NSAlert alloc] init];
             alert.messageText = SULocalizedString(@"Update Error!", nil);
@@ -318,7 +320,14 @@
             [self showAlert:alert];
         }
         [super abortUpdateWithError:error];
-    });
+    };
+    
+    // Prevent dead-locks. Do not dispatch to main, if alredy on the main thread.
+    if ([NSThread isMainThread]) {
+        dispatchBlock();
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), dispatchBlock);
+    }
 }
 
 - (void)abortUpdate
