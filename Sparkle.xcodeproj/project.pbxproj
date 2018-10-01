@@ -632,6 +632,10 @@
 		26B1A4692195FFE900B09783 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30119BB7205134E80010F746 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		30119BB9205134EC0010F746 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		305754BA21621FDD002C6C24 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		305754BB21621FE4002C6C24 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		305754BC21621FEC002C6C24 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		305754BD21621FFA002C6C24 /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		3076AB5F202DBA1000F0E503 /* GPGScheduledUpdateDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGScheduledUpdateDriver.h; sourceTree = "<group>"; };
 		3076AB60202DBA1000F0E503 /* GPGScheduledUpdateDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPGScheduledUpdateDriver.m; sourceTree = "<group>"; };
 		307EC655201B39DC00A833DF /* GPGPackageInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPGPackageInstaller.h; sourceTree = "<group>"; };
@@ -2568,6 +2572,10 @@
 				30C3BF48205BC6FB00E02998 /* ca */,
 				30C3BF49205BC71200E02998 /* es */,
 				30C3BF4A205BC71B00E02998 /* el */,
+				305754BA21621FDD002C6C24 /* cs */,
+				305754BB21621FE4002C6C24 /* id */,
+				305754BC21621FEC002C6C24 /* ru */,
+				305754BD21621FFA002C6C24 /* th */,
 			);
 			name = GPGSparkle.strings;
 			sourceTree = "<group>";
