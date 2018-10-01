@@ -1,0 +1,13 @@
+
+NotificationSubtitle = "Доступно обновление";
+NotificationMsg = "Нажмите здесь для подробностей...";
+NotificationInstall = "Установка";
+NotificationHide = "Не сейчас";
+NotificationDetails = "Детали...";
+
+
+ErrorInstallOriginal = "\n\nПожалуйста, скачайте и установите GPG Suite из https://gpgtools.org, чтобы иметь оригинальную версию.";
+ErrorTampered = "Кто-то вмешался в вашу установку GPG Suite!";
+ErrorNotPkg = "Обновление недействительно!";
+ErrorExtraction = "Обновление не удалось извлечь!";
+ErrorVerify = "Обновление не удалось проверить!";
