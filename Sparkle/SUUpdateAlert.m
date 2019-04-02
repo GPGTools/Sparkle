@@ -260,7 +260,7 @@ static NSString *const SUUpdateAlertTouchBarIndentifier = @"" SPARKLE_BUNDLE_IDE
     }
 
     if ([self.updateItem isCriticalUpdate]) {
-        self.skipButton.enabled = NO;
+        /*self.skipButton.enabled = NO;*/
     }
 
     [self.window center];

@@ -74,7 +74,7 @@ static NSString *const SUAutomaticUpdateAlertTouchBarIndentifier = @"" SPARKLE_B
 - (void)windowDidLoad
 {
     if ([self.updateItem isCriticalUpdate]) {
-        self.skipButton.enabled = NO;
+        /*self.skipButton.enabled = NO;*/
     }
 }
 
