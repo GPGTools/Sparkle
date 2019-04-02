@@ -14,6 +14,11 @@
 #import "SUConstants.h"
 
 
+static NSString *const GPGAppcastElementDisableNotification = @"sparkle:gpgtoolsDisableNotification";
+static NSString *const GPGAppcastElementInfoOnlyNotification = @"sparkle:gpgtoolsInfoOnlyNotification";
+
+
+
 @interface GPGScheduledUpdateDriver () <NSUserNotificationCenterDelegate>
 @property (nonatomic) BOOL notificationDismissed;
 @property (nonatomic) BOOL shouldDisableKeyboardShortcutForInstallButton;
@@ -56,8 +61,9 @@ static NSString *localized(NSString *key) {
 - (void)didFindValidUpdate {
     if (@available(macos 10.10, *)) {
         
-        if (self.updateItem.isCriticalUpdate) {
+        if (self.updateItem.isCriticalUpdate || [self.updateItem.propertiesDictionary[SUAppcastElementTags] containsObject:GPGAppcastElementDisableNotification]) {
             // For critical updates, the update dialog is displayed immediately.
+            // Also show the update dialog, if the notification is disabled.
             self.shouldDisableKeyboardShortcutForInstallButton = YES;
             [super didFindValidUpdate];
             return;
@@ -69,7 +75,13 @@ static NSString *localized(NSString *key) {
         notification.subtitle = [NSString stringWithFormat:localized(@"NotificationSubtitle"), self.host.name, self.updateItem.displayVersionString];
         notification.informativeText = localized(@"NotificationMsg");
         notification.hasActionButton = YES;
-        notification.actionButtonTitle = localized(self.updateItem.isInformationOnlyUpdate ? @"NotificationDetails" : @"NotificationInstall");
+        
+        if (self.updateItem.isInformationOnlyUpdate || [self.updateItem.propertiesDictionary[SUAppcastElementTags] containsObject:GPGAppcastElementInfoOnlyNotification]) {
+            notification.actionButtonTitle = localized(@"NotificationDetails");
+        } else {
+            notification.actionButtonTitle = localized(@"NotificationInstall");
+        }
+        
         notification.otherButtonTitle = localized(@"NotificationHide");
         
 //      NSUserNotificationAction *installAction = [NSUserNotificationAction actionWithIdentifier:@"install" title:localized(@"NotificationInstall")];
@@ -161,7 +173,9 @@ static NSString *localized(NSString *key) {
         case NSUserNotificationActivationTypeActionButtonClicked:
             // The user clicked on the bottom button.
             [self dismissNotification:notification];
-            self.automaticallyInstallUpdates = YES;
+            if (!self.updateItem.isInformationOnlyUpdate && ![self.updateItem.propertiesDictionary[SUAppcastElementTags] containsObject:GPGAppcastElementInfoOnlyNotification]) {
+                self.automaticallyInstallUpdates = YES;
+            }
             [super didFindValidUpdate];
             break;
 //      case NSUserNotificationActivationTypeAdditionalActionClicked: {
