@@ -1,0 +1,13 @@
+
+NotificationSubtitle = "Pemutakhiran tersedia";
+NotificationMsg = "Klik di sini untuk rincian...";
+NotificationInstall = "Pasang";
+NotificationHide = "Jangan Sekarang";
+NotificationDetails = "Rincian...";
+
+
+ErrorInstallOriginal = "\n\nHarap unduh dan pasang Keluarga GPG dari https://gpgtools.org untuk memastikan bahwa Anda memiliki versi yang asli.";
+ErrorTampered = "Seseorang mengotak-atik instalasi Keluarga GPG Anda!";
+ErrorNotPkg = "Pemutakhiran tidak valid!";
+ErrorExtraction = "Pemutakhiran tidak dapat diekstrak!";
+ErrorVerify = "Pemutakhiran tidak dapat diverifikasi!";

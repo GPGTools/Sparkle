@@ -1,0 +1,13 @@
+
+NotificationSubtitle = "Aktualizace je dostupná";
+NotificationMsg = "Podrobnosti…";
+NotificationInstall = "Instalovat";
+NotificationHide = "Nyní ne";
+NotificationDetails = "Podrobnosti…";
+
+
+ErrorInstallOriginal = "Zkopírujte a nainstalujte si GPG Suite z umístění https://gpgtools.org a ujistěte se, že máte skutečně originální verzi.";
+ErrorTampered = "Někdo poškodil vaši instalaci GPG Suite!";
+ErrorNotPkg = "Aktualizace je neplatná!";
+ErrorExtraction = "Aktualizaci se nepovedlo rozbalit!";
+ErrorVerify = "Aktualizaci se nepovedlo ověřit!";
