@@ -647,6 +647,7 @@
 		30C3BF48205BC6FB00E02998 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		30C3BF49205BC71200E02998 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		30C3BF4A205BC71B00E02998 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
+		30C95DF62302BB4300CD7778 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/GPGSparkle.strings; sourceTree = "<group>"; };
 		34074B8C1FEABD08001CB3A5 /* SPUDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPUDownloader.m; sourceTree = "<group>"; };
 		34074B8D1FEABD08001CB3A5 /* SPUDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUDownloader.h; sourceTree = "<group>"; };
 		34074B8E1FEABD08001CB3A5 /* SPUDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUDownloaderDelegate.h; sourceTree = "<group>"; };
@@ -2576,6 +2577,7 @@
 				305754BB21621FE4002C6C24 /* id */,
 				305754BC21621FEC002C6C24 /* ru */,
 				305754BD21621FFA002C6C24 /* th */,
+				30C95DF62302BB4300CD7778 /* ja */,
 			);
 			name = GPGSparkle.strings;
 			sourceTree = "<group>";
