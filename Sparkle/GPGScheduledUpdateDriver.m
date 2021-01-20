@@ -112,7 +112,17 @@ static NSString *localized(NSString *key) {
 }
 
 - (void)abortUpdate {
-    [self dismissNotification:self.updateNotification];
+    // Bug #2: Updater process never exits preventing a new update check from running.
+    //
+    // In case no update is found, `self.updateNotification` is nil and
+    // a call to dismissNotification will trigger an exception within
+    // `[NSUserNotificationCenter removeDeliveredNotification:]`.
+    // Since that exception is not caught, `[super abortUpdate]` which sets the
+    // `finished` flag of the driver is never called and the updater
+    // believes forever that the update is still in progress.
+    if(self.updateNotification) {
+        [self dismissNotification:self.updateNotification];
+    }
     [super abortUpdate];
 }
 
