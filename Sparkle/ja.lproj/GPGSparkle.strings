@@ -1,6 +1,6 @@
 
-NotificationSubtitle = "Update available";
-NotificationMsg = "Click here for details…";
+NotificationSubtitle = "アップデートが利用可能です";
+NotificationMsg = "クリックして詳細を表示";
 NotificationInstall = "インストール";
 NotificationHide = "今はしない";
 NotificationDetails = "詳細…";

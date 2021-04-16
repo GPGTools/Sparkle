@@ -6,7 +6,7 @@ NotificationHide = "ไม่ใช่ตอนนี้";
 NotificationDetails = "รายละเอียด...";
 
 
-ErrorInstallOriginal = "\nกรุณาดาวน์โหลดและติดตั้ง GPG Suite จาก https://gpgtools.org เพื่อให้แน่ใจว่าคุณจะได้ซอฟต์แวร์ของแท้";
+ErrorInstallOriginal = "\n\nกรุณาดาวน์โหลดและติดตั้ง GPG Suite จาก https://gpgtools.org เพื่อให้แน่ใจว่าคุณจะได้ซอฟต์แวร์ของแท้";
 ErrorTampered = "มีใครบางคนแก้ไขเปลี่ยนแปลงการติดตั้ง GPG Suite ของคุณ!";
 ErrorNotPkg = "แฟ้มการปรับปรุงไม่ถูกต้อง";
 ErrorExtraction = "ไม่สามารถเปิดแฟ้มการปรับปรุงได้";

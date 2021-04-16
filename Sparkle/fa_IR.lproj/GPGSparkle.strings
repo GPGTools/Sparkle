@@ -1,0 +1,13 @@
+
+NotificationSubtitle = "به‌روزرسانی در دسترس است";
+NotificationMsg = "برای جزئیات اینجا کلیک کنید";
+NotificationInstall = "نصب";
+NotificationHide = "الآن نه";
+NotificationDetails = "جزئیات...";
+
+
+ErrorInstallOriginal = "\n\nلطفا مجموعه GPG را از نشانی https://gpgtools.org بارگیری کنید تا مطمئن شوید نسخه اصلی را دارید.";
+ErrorTampered = "شخصی در نصب مجموعه GPG شما دست برده است!";
+ErrorNotPkg = "به‌روزرسانی معتبر نیست!";
+ErrorExtraction = "به‌روزرسانی قابل استخراج نیست!";
+ErrorVerify = "به‌روزرسانی قابل تایید نیست!";
