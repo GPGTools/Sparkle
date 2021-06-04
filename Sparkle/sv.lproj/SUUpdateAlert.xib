@@ -78,7 +78,7 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="fKC-QA-GZa" userLabel="Container to hide release notes">
                         <rect key="frame" x="108" y="74" width="516" height="234"/>
                         <subviews>
-                            <box boxType="oldStyle" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="89">
+                            <box boxType="custom" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="89">
                                 <rect key="frame" x="0.0" y="0.0" width="492" height="234"/>
                                 <view key="contentView" id="hbB-V1-Bf6">
                                     <rect key="frame" x="1" y="1" width="490" height="232"/>
