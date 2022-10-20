@@ -94,11 +94,12 @@ static NSString *localized(NSString *key) {
 - (BOOL)isBundleValidSigned:(NSBundle *)bundle {
     SecRequirementRef requirement = nil;
     SecStaticCodeRef staticCode = nil;
+
+    SecCSFlags validityFlags = kSecCSDefaultFlags | kSecCSCheckNestedCode | kSecCSCheckAllArchitectures | kSecCSEnforceRevocationChecks;
+    SecStaticCodeCreateWithPath((__bridge CFURLRef)[bundle bundleURL], kSecCSDefaultFlags, &staticCode);
+    SecRequirementCreateWithString(CFSTR("anchor apple generic and ( cert leaf = H\"C21964B138DE0094F42CEDE7078C6F800BA5838B\" or cert leaf = H\"233B4E43187B51BF7D6711053DD652DDF54B43BE\" or cert leaf = H\"E2C077C85EC4024699920B3C206364F742CEC790\" ) "), kSecCSDefaultFlags, &requirement);
     
-    SecStaticCodeCreateWithPath((__bridge CFURLRef)[bundle bundleURL], 0, &staticCode);
-    SecRequirementCreateWithString(CFSTR("anchor apple generic and ( cert leaf = H\"C21964B138DE0094F42CEDE7078C6F800BA5838B\" or cert leaf = H\"233B4E43187B51BF7D6711053DD652DDF54B43BE\" ) "), 0, &requirement);
-    
-    OSStatus result = SecStaticCodeCheckValidity(staticCode, 0, requirement);
+    OSStatus result = SecStaticCodeCheckValidity(staticCode, validityFlags, requirement);
     
     if (staticCode) {
         CFRelease(staticCode);
